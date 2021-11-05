@@ -42,9 +42,10 @@ public class AddressBookController {
 	}
 
 	@PostMapping("/create")
-	public ResponseEntity<String> createAddressBookData(@RequestBody String addressBookName) {
-		addressBook.put(counter.incrementAndGet(), addressBookName);
-		return new ResponseEntity<String>("ADDED" + addressBook.get(counter.get()), HttpStatus.OK);
+	public ResponseEntity<ResponseDTO> createAddressBookData(@RequestBody ContactDTO contactDTO) {
+		ContactData contactData= new ContactData(1,contactDTO);
+		ResponseDTO response = new ResponseDTO("Contact Added ",contactData); 
+		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	}
 
 	@PutMapping("/update/{addressBookId}")
