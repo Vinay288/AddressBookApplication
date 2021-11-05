@@ -34,8 +34,11 @@ public class AddressBookController {
 	}
 
 	@GetMapping("/get/{addressBookId}")
-	public ResponseEntity<String> getAddressBookDataById(@PathVariable long addressBookId) {
-		return new ResponseEntity<String>(addressBook.get(addressBookId), HttpStatus.OK);
+	public ResponseEntity<ResponseDTO> getAddressBookDataById(@PathVariable long addressBookId) {
+		ContactData contactData = new ContactData(1,
+				new ContactDTO("Vinay", "Hiremath", "9110473394", "badami", "karnataka", "587201","vinay@gmail.com"));
+		ResponseDTO response = new ResponseDTO("Get Call Success", contactData);
+		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	}
 
 	@PostMapping("/create")
