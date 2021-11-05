@@ -31,4 +31,10 @@ public class AddressBookController {
 		return new ResponseEntity<String>(addressBook.get(addressBookId), HttpStatus.OK);
 	}
 
+	@PostMapping("/create")
+	public ResponseEntity<String> createAddressBookData(@RequestBody String addressBookName) {
+		addressBook.put(counter.incrementAndGet(), addressBookName);
+		return new ResponseEntity<String>("ADDED" + addressBook.get(counter.get()), HttpStatus.OK);
+	}
+
 }
