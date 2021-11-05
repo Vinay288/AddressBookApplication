@@ -58,7 +58,6 @@ public class AddressBookController {
 
 	@DeleteMapping("/delete/{addressBookId}")
 	public ResponseEntity<String> deleteAddressBookData(@PathVariable long addressBookId) {
-		addressBook.remove(addressBookId);
 		return new ResponseEntity<String>("deleted employee = " + addressBookId, HttpStatus.OK);
 	}
 
