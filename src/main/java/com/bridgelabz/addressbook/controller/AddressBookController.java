@@ -37,4 +37,11 @@ public class AddressBookController {
 		return new ResponseEntity<String>("ADDED" + addressBook.get(counter.get()), HttpStatus.OK);
 	}
 
+	@PutMapping("/update/{addressBookId}")
+	public ResponseEntity<String> updateAddressBookData(@PathVariable long addressBookId,
+			@RequestBody String addressBookName) {
+		addressBook.remove(addressBookId);
+		addressBook.put(addressBookId, addressBookName);
+		return new ResponseEntity<String>(addressBook.get(addressBookId), HttpStatus.OK);
+	}
 }
