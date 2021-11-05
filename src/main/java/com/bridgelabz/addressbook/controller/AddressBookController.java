@@ -16,14 +16,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bridgelabz.addressbook.dto.ContactDTO;
+import com.bridgelabz.addressbook.dto.ResponseDTO;
+import com.bridgelabz.addressbook.model.ContactData;
+
 @RestController
 public class AddressBookController {
 	Map<Long, String> addressBook = new HashMap<>();
 	private final AtomicLong counter = new AtomicLong();
 
 	@RequestMapping(value = { "", "/", "/get" })
-	public ResponseEntity<String> getAddressBookData() {
-		return new ResponseEntity<String>(addressBook.values().toString(), HttpStatus.OK);
+	public ResponseEntity<ResponseDTO> getAddressBookData() {
+		ContactData contactData = new ContactData(1,
+				new ContactDTO("Vinay", "Hiremath", "9110473394", "badami", "karnataka", "587201","vinay@gmail.com"));
+		ResponseDTO response = new ResponseDTO("Get Call Success", contactData);
+		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	}
 
 	@GetMapping("/get/{addressBookId}")
