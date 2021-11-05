@@ -28,7 +28,7 @@ public class AddressBookController {
 	@RequestMapping(value = { "", "/", "/get" })
 	public ResponseEntity<ResponseDTO> getAddressBookData() {
 		ContactData contactData = new ContactData(1,
-				new ContactDTO("Vinay", "Hiremath", "9110473394", "badami", "karnataka", "587201","vinay@gmail.com"));
+				new ContactDTO("Vinay", "Hiremath", "9110473394", "badami", "karnataka", "587201", "vinay@gmail.com"));
 		ResponseDTO response = new ResponseDTO("Get Call Success", contactData);
 		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	}
@@ -36,24 +36,24 @@ public class AddressBookController {
 	@GetMapping("/get/{addressBookId}")
 	public ResponseEntity<ResponseDTO> getAddressBookDataById(@PathVariable long addressBookId) {
 		ContactData contactData = new ContactData(1,
-				new ContactDTO("Vinay", "Hiremath", "9110473394", "badami", "karnataka", "587201","vinay@gmail.com"));
+				new ContactDTO("Vinay", "Hiremath", "9110473394", "badami", "karnataka", "587201", "vinay@gmail.com"));
 		ResponseDTO response = new ResponseDTO("Get Call Success", contactData);
 		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	}
 
 	@PostMapping("/create")
 	public ResponseEntity<ResponseDTO> createAddressBookData(@RequestBody ContactDTO contactDTO) {
-		ContactData contactData= new ContactData(1,contactDTO);
-		ResponseDTO response = new ResponseDTO("Contact Added ",contactData); 
+		ContactData contactData = new ContactData(1, contactDTO);
+		ResponseDTO response = new ResponseDTO("Contact Added ", contactData);
 		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	}
 
 	@PutMapping("/update/{addressBookId}")
-	public ResponseEntity<String> updateAddressBookData(@PathVariable long addressBookId,
-			@RequestBody String addressBookName) {
-		addressBook.remove(addressBookId);
-		addressBook.put(addressBookId, addressBookName);
-		return new ResponseEntity<String>(addressBook.get(addressBookId), HttpStatus.OK);
+	public ResponseEntity<ResponseDTO> updateAddressBookData(@PathVariable int contactId,
+			@RequestBody ContactDTO contactDTO) {
+		ContactData contactData = new ContactData(contactId, contactDTO);
+		ResponseDTO response = new ResponseDTO("Contact Added ", contactData);
+		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/delete/{addressBookId}")
