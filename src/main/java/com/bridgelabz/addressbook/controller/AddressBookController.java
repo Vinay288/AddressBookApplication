@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,46 +20,49 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bridgelabz.addressbook.dto.ContactDTO;
 import com.bridgelabz.addressbook.dto.ResponseDTO;
 import com.bridgelabz.addressbook.model.ContactData;
+import com.bridgelabz.addressbook.service.AddressBookService;
 
 @RestController
 public class AddressBookController {
 	Map<Long, String> addressBook = new HashMap<>();
 	private final AtomicLong counter = new AtomicLong();
 
+	@Autowired
+	AddressBookService addressBookService;
+
 	@RequestMapping(value = { "", "/", "/get" })
-	public ResponseEntity<ResponseDTO> getAddressBookData() {
-		ContactData contactData = new ContactData(1,
-				new ContactDTO("Vinay", "Hiremath", "9110473394", "badami", "karnataka", "587201", "vinay@gmail.com"));
-		ResponseDTO response = new ResponseDTO("Get Call Success", contactData);
+	public ResponseEntity<ResponseDTO> getContactData() {
+		List<ContactData> contactList = addressBookService.getContact();
+		ResponseDTO response = new ResponseDTO("Get Call Success", contactList);
 		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	}
 
 	@GetMapping("/get/{addressBookId}")
-	public ResponseEntity<ResponseDTO> getAddressBookDataById(@PathVariable long addressBookId) {
-		ContactData contactData = new ContactData(1,
-				new ContactDTO("Vinay", "Hiremath", "9110473394", "badami", "karnataka", "587201", "vinay@gmail.com"));
-		ResponseDTO response = new ResponseDTO("Get Call Success", contactData);
+	public ResponseEntity<ResponseDTO> getContactDataById(@PathVariable int contactId) {
+		ContactData contactData = addressBookService.getContactById(contactId);
+		ResponseDTO response = new ResponseDTO("Get Call By id Success", contactData);
 		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	}
 
 	@PostMapping("/create")
-	public ResponseEntity<ResponseDTO> createAddressBookData(@RequestBody ContactDTO contactDTO) {
-		ContactData contactData = new ContactData(1, contactDTO);
+	public ResponseEntity<ResponseDTO> createContactData(@RequestBody ContactDTO contactDTO) {
+		ContactData contactData = addressBookService.createContact(contactDTO);
 		ResponseDTO response = new ResponseDTO("Contact Added ", contactData);
 		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	}
 
 	@PutMapping("/update/{addressBookId}")
-	public ResponseEntity<ResponseDTO> updateAddressBookData(@PathVariable int contactId,
+	public ResponseEntity<ResponseDTO> updateContactData(@PathVariable int contactId,
 			@RequestBody ContactDTO contactDTO) {
-		ContactData contactData = new ContactData(contactId, contactDTO);
+		ContactData contactData = addressBookService.updateContact(contactId, contactDTO);
 		ResponseDTO response = new ResponseDTO("Contact Added ", contactData);
 		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/delete/{addressBookId}")
-	public ResponseEntity<String> deleteAddressBookData(@PathVariable long addressBookId) {
-		return new ResponseEntity<String>("deleted employee = " + addressBookId, HttpStatus.OK);
+	public ResponseEntity<String> deleteContactData(@PathVariable int contactId) {
+		addressBookService.deleteContact(contactId);
+		return new ResponseEntity<String>("deleted employee = " + contactId, HttpStatus.OK);
 	}
 
 }
