@@ -37,7 +37,7 @@ public class AddressBookController {
 		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	}
 
-	@GetMapping("/get/{addressBookId}")
+	@GetMapping("/get/{contactId}")
 	public ResponseEntity<ResponseDTO> getContactDataById(@PathVariable int contactId) {
 		ContactData contactData = addressBookService.getContactById(contactId);
 		ResponseDTO response = new ResponseDTO("Get Call By id Success", contactData);
@@ -51,7 +51,7 @@ public class AddressBookController {
 		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	}
 
-	@PutMapping("/update/{addressBookId}")
+	@PutMapping("/update/{contactId}")
 	public ResponseEntity<ResponseDTO> updateContactData(@PathVariable int contactId,
 			@RequestBody ContactDTO contactDTO) {
 		ContactData contactData = addressBookService.updateContact(contactId, contactDTO);
@@ -59,7 +59,7 @@ public class AddressBookController {
 		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/delete/{addressBookId}")
+	@DeleteMapping("/delete/{contactId}")
 	public ResponseEntity<String> deleteContactData(@PathVariable int contactId) {
 		addressBookService.deleteContact(contactId);
 		return new ResponseEntity<String>("deleted employee = " + contactId, HttpStatus.OK);
