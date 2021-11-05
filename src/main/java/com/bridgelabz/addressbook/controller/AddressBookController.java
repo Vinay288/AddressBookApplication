@@ -44,4 +44,11 @@ public class AddressBookController {
 		addressBook.put(addressBookId, addressBookName);
 		return new ResponseEntity<String>(addressBook.get(addressBookId), HttpStatus.OK);
 	}
+
+	@DeleteMapping("/delete/{addressBookId}")
+	public ResponseEntity<String> deleteAddressBookData(@PathVariable long addressBookId) {
+		addressBook.remove(addressBookId);
+		return new ResponseEntity<String>("deleted employee = " + addressBookId, HttpStatus.OK);
+	}
+
 }
