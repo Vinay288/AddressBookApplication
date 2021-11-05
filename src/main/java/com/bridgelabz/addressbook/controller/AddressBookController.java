@@ -26,4 +26,9 @@ public class AddressBookController {
 		return new ResponseEntity<String>(addressBook.values().toString(), HttpStatus.OK);
 	}
 
+	@GetMapping("/get/{addressBookId}")
+	public ResponseEntity<String> getAddressBookDataById(@PathVariable long addressBookId) {
+		return new ResponseEntity<String>(addressBook.get(addressBookId), HttpStatus.OK);
+	}
+
 }
