@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +47,7 @@ public class AddressBookController {
 	}
 
 	@PostMapping("/create")
-	public ResponseEntity<ResponseDTO> createContactData(@RequestBody ContactDTO contactDTO) {
+	public ResponseEntity<ResponseDTO> createContactData(@Valid @RequestBody ContactDTO contactDTO) {
 		ContactData contactData = addressBookService.createContact(contactDTO);
 		ResponseDTO response = new ResponseDTO("Contact Added ", contactData);
 		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
@@ -53,7 +55,7 @@ public class AddressBookController {
 
 	@PutMapping("/update/{contactId}")
 	public ResponseEntity<ResponseDTO> updateContactData(@PathVariable int contactId,
-			@RequestBody ContactDTO contactDTO) {
+			@Valid @RequestBody ContactDTO contactDTO) {
 		ContactData contactData = addressBookService.updateContact(contactId, contactDTO);
 		ResponseDTO response = new ResponseDTO("Contact Added ", contactData);
 		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
