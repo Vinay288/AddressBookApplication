@@ -2,6 +2,7 @@ package com.bridgelabz.addressbook.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.stereotype.Service;
 
@@ -10,35 +11,36 @@ import com.bridgelabz.addressbook.model.ContactData;
 
 @Service
 public class AddressBookService implements IAddressBookService {
-
+ List<ContactData> contactList=new ArrayList<>();
+ private final AtomicInteger counter = new AtomicInteger();
 	@Override
 	public List<ContactData> getContact() {
-		List<ContactData> contactList = new ArrayList<>();
-        contactList.add(new ContactData(1,new ContactDTO("Vinay", "Hiremath", "9110473394", "badami", "karnataka", "587201", "vinay@gmail.com")));
         return contactList;
 	}
 
 	@Override
 	public ContactData getContactById(int contactId) {
-		 ContactData contactData = new ContactData(1,new ContactDTO("Vinay", "Hiremath", "9110473394", "badami", "karnataka", "587201", "vinay@gmail.com"));
-	        return contactData;
+	        return contactList.get(contactId-1);
 	}
 
 	@Override
 	public ContactData createContact(ContactDTO contactDTO) {
-		ContactData contactData=new ContactData(1,contactDTO);
+		ContactData contactData=new ContactData(counter.incrementAndGet(),contactDTO);
+		contactList.add(contactData);
 		return contactData;
 	}
 
 	@Override
 	public ContactData updateContact(int contactId, ContactDTO contactDTO) {
+		contactList.remove(contactId-1);
 		ContactData contactData=new ContactData(contactId,contactDTO);
+		contactList.add(contactData);
 		return contactData;
 	}
 
 	@Override
 	public void deleteContact(int contactId) {
-		// TODO Auto-generated method stub
+		contactList.remove(contactId-1);
 		
 	}
 
