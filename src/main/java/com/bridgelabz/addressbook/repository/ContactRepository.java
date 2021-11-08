@@ -13,4 +13,10 @@ public interface ContactRepository extends JpaRepository<ContactData, Integer>{
 @Query(value="select * from contact where state = :state",nativeQuery = true)
 List<ContactData> findContactByState(String state);
 
+@Query(value="select * from contact where city = :city",nativeQuery = true)
+List<ContactData> findContactByCity(String city);
+
+@Query(value="select * from contact where zip_code = :zipCode",nativeQuery = true)
+List<ContactData> findContactByZipCode(String zipCode);
+
 }

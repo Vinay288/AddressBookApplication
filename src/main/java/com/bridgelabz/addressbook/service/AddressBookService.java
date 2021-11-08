@@ -51,4 +51,14 @@ public class AddressBookService implements IAddressBookService {
 		return contactRepository.findContactByState(state);
 	}
 
+	@Override
+	public List<ContactData> getContactByCity(String city) {
+		return contactRepository.findContactByCity(city);
+	}
+
+	@Override
+	public List<ContactData> getContactByZipCode(String zipCode) {
+		return contactRepository.findContactByZipCode(zipCode);
+	}
+
 }

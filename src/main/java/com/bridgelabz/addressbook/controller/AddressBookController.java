@@ -52,6 +52,18 @@ public class AddressBookController {
 		ResponseDTO response = new ResponseDTO("Get Call Success", contactList);
 		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	}
+	@RequestMapping("/city/{city}")
+	public ResponseEntity<ResponseDTO> getContactDataByCity(@PathVariable String city) {
+		List<ContactData> contactList = addressBookService.getContactByCity(city);
+		ResponseDTO response = new ResponseDTO("Get Call Success", contactList);
+		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
+	}
+	@RequestMapping("/zipcode/{zipCode}")
+	public ResponseEntity<ResponseDTO> getContactDataByZipCode(@PathVariable String zipCode) {
+		List<ContactData> contactList = addressBookService.getContactByZipCode(zipCode);
+		ResponseDTO response = new ResponseDTO("Get Call Success", contactList);
+		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
+	}
 
 	@PostMapping("/create")
 	public ResponseEntity<ResponseDTO> createContactData(@Valid @RequestBody ContactDTO contactDTO) {

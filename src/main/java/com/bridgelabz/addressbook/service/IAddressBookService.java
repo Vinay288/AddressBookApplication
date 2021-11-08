@@ -12,4 +12,6 @@ public interface IAddressBookService {
 	    ContactData updateContact(int contactId,ContactDTO contactDTO);
 	    void deleteContact(int contactId);
 	    List<ContactData> getContactByState(String state);
+	    List<ContactData> getContactByCity(String city);
+	    List<ContactData> getContactByZipCode(String zipCode);
 }
