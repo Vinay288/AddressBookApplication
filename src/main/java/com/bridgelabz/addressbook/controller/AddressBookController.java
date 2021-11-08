@@ -45,6 +45,13 @@ public class AddressBookController {
 		ResponseDTO response = new ResponseDTO("Get Call By id Success", contactData);
 		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	}
+	
+	@RequestMapping("/state/{state}")
+	public ResponseEntity<ResponseDTO> getContactDataByState(@PathVariable String state) {
+		List<ContactData> contactList = addressBookService.getContactByState(state);
+		ResponseDTO response = new ResponseDTO("Get Call Success", contactList);
+		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
+	}
 
 	@PostMapping("/create")
 	public ResponseEntity<ResponseDTO> createContactData(@Valid @RequestBody ContactDTO contactDTO) {
